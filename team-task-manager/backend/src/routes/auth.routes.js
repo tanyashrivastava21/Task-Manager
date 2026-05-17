@@ -7,7 +7,7 @@ const { validate, signupSchema, loginSchema } = require('../middleware/validate.
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5,
+  max: 100, // Increased for development
   message: { error: 'Too many requests, please try again later.' },
   standardHeaders: true,
   legacyHeaders: false,

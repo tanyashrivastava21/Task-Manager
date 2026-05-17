@@ -26,14 +26,14 @@ const loginSchema = z.object({
 const createProjectSchema = z.object({
   name: z.string().min(1).max(100),
   description: z.string().optional(),
-  deadline: z.string().datetime().optional(),
+  deadline: z.string().refine((val) => !val || !isNaN(Date.parse(val)), { message: 'Invalid date' }).optional().nullable(),
 });
 
 const updateProjectSchema = z.object({
   name: z.string().min(1).max(100).optional(),
   description: z.string().optional(),
   status: z.enum(['ACTIVE', 'ARCHIVED']).optional(),
-  deadline: z.string().datetime().optional(),
+  deadline: z.string().refine((val) => !val || !isNaN(Date.parse(val)), { message: 'Invalid date' }).optional().nullable(),
 });
 
 const addMemberSchema = z.object({
@@ -46,7 +46,7 @@ const createTaskSchema = z.object({
   title: z.string().min(1).max(200),
   description: z.string().optional(),
   priority: z.enum(['LOW', 'MEDIUM', 'HIGH', 'URGENT']).default('MEDIUM'),
-  dueDate: z.string().datetime().optional(),
+  dueDate: z.string().refine((val) => !val || !isNaN(Date.parse(val)), { message: 'Invalid date' }).optional().nullable(),
   assigneeId: z.string().optional(),
 });
 
@@ -54,7 +54,7 @@ const updateTaskSchema = z.object({
   title: z.string().min(1).max(200).optional(),
   description: z.string().optional(),
   priority: z.enum(['LOW', 'MEDIUM', 'HIGH', 'URGENT']).optional(),
-  dueDate: z.string().datetime().optional().nullable(),
+  dueDate: z.string().refine((val) => !val || !isNaN(Date.parse(val)), { message: 'Invalid date' }).optional().nullable(),
   assigneeId: z.string().optional().nullable(),
 });
 
